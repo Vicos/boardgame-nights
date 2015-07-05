@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+<ul class="nav nav-tabs">
+  <li><a href="{% url '/index.html' %}">Plays</a></li>
+  <li><a href="{% url '/players.html' %}">Players</a></li>
+  <li class="active"><a href="{% url '/games.html' %}">Games</a></li>
+</ul>
+
+<p>
+  <table class="table table-striped">
+    <tr>
+      <th>Game name</th>
+      <th>Plays</th>
+      <th>Last played</th>
+    </tr>
+
+  {% for game in Game.select|dictsortreversed:"plays.count" %}
+    <tr>
+      <td>{{ game.name }}</td>
+      <td>{{ game.plays.count }}</td>
+      <td>{{ game.lastplayed }}</td>
+    </tr>
+  {% endfor %}
+
+  </table>
+</p>
+
+{% endblock %}

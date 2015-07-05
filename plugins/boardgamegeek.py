@@ -12,12 +12,8 @@ class BaseModel(Model):
 class Game(BaseModel):
   gameid = IntegerField(primary_key=True)
   name = CharField()
-  def byPlays(self):
-    return ( Game
-              .select()
-              .join(Play)
-              .group_by(Game.gameid)
-              .order_by(fn.Count(Play.playid).desc()) )
+  def lastplayed(self):
+    return ( self.plays.order_by(Play.date)[0].date )
 
 class Play(BaseModel):
   playid = IntegerField(primary_key=True)
