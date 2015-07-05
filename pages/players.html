@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+<table class="table">
+  <tr>
+    <th>Player name</th>
+    <th>Plays</th>
+    <th>Wins / Defeats (Ratio)</th>
+  </tr>
+
+{% for player in Player.select|dictsortreversed:"plays.count" %}
+  <tr>
+    <td>{{ player.name }}</td>
+    <td>{{ player.plays.count }}</td>
+    <td>
+      {{ player.wins.count }} / {{ player.defeats.count }}
+      ( {% if player.ratio != None %} {{ player.ratio|floatformat:2 }} {% else %} &infin; {% endif %} )
+    </td>
+    <td>
+
+    </td>
+  </tr>
+{% endfor %}
+
+</table>
+
+{% endblock %}
