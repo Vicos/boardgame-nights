@@ -1,0 +1,39 @@
+{% extends "_layout.html.jinja" %}
+
+{% block body %}
+
+<ul class="nav nav-tabs">
+  <li><a href="index.html">Plays</a></li>
+  <li class="active"><a href="/players.html">Players</a></li>
+  <li><a href="games.html">Games</a></li>
+</ul>
+
+<p>
+  <table class="table table-striped">
+    <tr>
+      <th>Player name</th>
+      <th>Plays</th>
+      <th>Wins / Defeats (Ratio)</th>
+    </tr>
+
+  {% for player in Player.select()|sort(attribute='plays', reverse=True) %}
+    <tr>
+      <td>{{ player.name }}</td>
+      <td>{{ player.plays }}</td>
+      <td>
+        {{ player.wins }} / {{ player.defeats }}
+        (
+        {% if player.ratio != None %}
+          {{ player.ratio|round(precision=2) }}
+        {% else %}
+          &infin;
+        {% endif %}
+        )
+      </td>
+    </tr>
+  {% endfor %}
+
+  </table>
+</p>
+
+{% endblock %}

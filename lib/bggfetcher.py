@@ -1,66 +1,13 @@
-from peewee import *
-
-# BoardGameGeek Model
-database = SqliteDatabase(':memory:')
-
-ANONYMOUS_PLAYER_NAME = 'John Doe'
-
-class BaseModel(Model):
-  class Meta:
-    database = database
-
-class Game(BaseModel):
-  gameid = IntegerField(primary_key=True)
-  name = CharField()
-  def lastplayed(self):
-    return ( self.plays.order_by(Play.date)[0].date )
-
-class Play(BaseModel):
-  playid = IntegerField(primary_key=True)
-  date = DateField(null=True)
-  location = CharField(null=True)
-  quantity = IntegerField(null=True)
-  length = IntegerField(null=True)
-  game = ForeignKeyField(Game, related_name='plays', null=True)
-
-class Player(BaseModel):
-  name = CharField(primary_key=True)
-  def byPlays(self):
-    return ( Player
-              .select()
-              .join(PlayerPlay)
-              .group_by(Player.name)
-              .order_by(fn.Count(PlayerPlay.play).desc()) )
-  def wins(self):
-    return (self.plays.where(PlayerPlay.win == True))
-  def defeats(self):
-    return (self.plays.where(PlayerPlay.win == False))
-  def ratio(self):
-    return ((1.0 * self.wins().count() / self.defeats().count()) if (self.defeats().count() > 0) else None)
-
-class PlayerPlay(BaseModel):
-  play = ForeignKeyField(Play, related_name='players')
-  player = ForeignKeyField(Player, related_name='plays', null=True)
-  win = BooleanField(null=True)
-  score = IntegerField(null=True)
-  startposition = IntegerField(null=True)
-  new = BooleanField(null=True)
-  color = CharField(null=True)
-
-# start a permanent connection
-database.connect()
-# in-memory database always need to create tables
-database.create_tables([Game, Play, Player, PlayerPlay])
-
-# BoardGameGeek Fetcher
-
 import logging
 import requests
 import json
 from xml.etree import ElementTree
 
+from bggmodels import Play, Game, Player, PlayerPlay
+
 BGG_PLAYS_URL = 'http://boardgamegeek.com/xmlapi2/plays'
 BGG_MAX_PLAY_PER_REQUEST = 100
+ANONYMOUS_PLAYER_NAME = 'John Doe'
 
 class Fetcher:
   def fetch(self):
@@ -162,17 +109,3 @@ class Fetcher:
     pp.win = ( element.get('win') == "1" )
     # save changes
     pp.save()
-
-# Cactus Plugin API
-
-def preBuild(site):
-  f = Fetcher() 
-  # f.fetch() # only for prod purpose
-  f.openSample('test-samples.xml') # only for testing purpose
-
-def preBuildPage(site, page, context, data):
-  context['Play'] = Play
-  context['Game'] = Game
-  context['Player'] = Player
-  context['PlayerPlay'] = PlayerPlay
-  return context, data

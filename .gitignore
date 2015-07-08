@@ -2,7 +2,5 @@
 __pycache__/
 *.py[cod]
 
-# Cactus
-.delpoy/
-.build/
-config.json
+# Boardgame nights
+build/
