@@ -2,27 +2,44 @@
 {% set active_page = "games" %}
 
 {% block body %}
-<section class="content-header">
-  <h1>Games</h1>
-</section>
-
 <section class="content">
-  <table class="table table-striped">
-    <tr>
-      <th>Game name</th>
-      <th>Plays</th>
-      <th>Last played</th>
-    </tr>
-
-  {% for game in Game.select()|sort(attribute='count', reverse=True) %}
-    <tr>
-      <td>{{ game.name }}</td>
-      <td>{{ game.count }}</td>
-      <td>{{ game.lastplayed }}</td>
-    </tr>
-  {% endfor %}
-
-  </table>
+  <div class="box">
+    <div class="box-header">
+      <h3 class="box-title">Games</h3>
+    </div>
+    <div class="box-body">
+      <table id="games-table" class="table table-striped">
+        <thead>
+          <tr>
+            <th>Game name</th>
+            <th>Plays</th>
+            <th>Last played</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for game in Game.select()|sort(attribute='count', reverse=True) %}
+            <tr>
+              <td>{{ game.name }}</td>
+              <td>{{ game.count }}</td>
+              <td>{{ game.lastplayed }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
 </section>
+{% endblock %}
 
+{% block scripts %}
+<script type="text/javascript" charset="utf-8">
+  $(function () {
+    $("#games-table").DataTable({
+      "searching": true,
+      "order": [[ 1, 'desc' ]],
+      "lengthChange": false,
+      "pageLength": 15,
+    });
+  });
+</script>
 {% endblock %}

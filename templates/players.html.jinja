@@ -9,25 +9,24 @@
     </div>
     <div class="box-body">
       <table id="players-table" class="table table-bordered table-striped">
-
-      <thead>
-        <tr>
-          <th>Player name</th>
-          <th>Plays</th>
-          <th>Wins / Defeats</th>
-          <th>Ratio</th>
-        </tr>
-      </thead>
-
-      {% for player in Player.select() %}
-        <tr>
-          <td>{{ player.name }}</td>
-          <td>{{ player.plays }}</td>
-          <td>{{ player.wins }} / {{ player.defeats }}</td>
-          <td>{% if player.ratio != None %} {{ player.ratio|round(precision=2) }} {% else %} &infin; {% endif %}</td>
-        </tr>
-      {% endfor %}
-
+        <thead>
+          <tr>
+            <th>Player name</th>
+            <th>Plays</th>
+            <th>Wins / Defeats</th>
+            <th>Ratio</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for player in Player.select() %}
+            <tr>
+              <td>{{ player.name }}</td>
+              <td>{{ player.plays }}</td>
+              <td>{{ player.wins }} / {{ player.defeats }}</td>
+              <td>{% if player.ratio != None %} {{ player.ratio|round(precision=2) }} {% else %} &infin; {% endif %}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
       </table>
     </div>
   </div>
@@ -38,11 +37,11 @@
 <script type="text/javascript" charset="utf-8">
   $(function () {
     $("#players-table").DataTable({
-      "searching": false,
+      "searching": true,
       "order": [[ 1, 'desc' ]],
       "lengthChange": false,
       "pageLength": 15,
     });
   });
-</script
+</script>
 {% endblock %}
