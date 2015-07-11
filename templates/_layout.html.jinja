@@ -46,10 +46,10 @@
         <!-- sidebar: style can be found in sidebar.less -->
         {%
           set sidebar_menu = [
-              ('index.html',   'dashboard', 'Dashboard'),
-              ('plays.html',   'plays',     'Plays'),
-              ('games.html',   'games',     'Games'),
-              ('players.html', 'players',   'Players')
+              ('index.html',   'dashboard', 'Dashboard', 'fa fa-tachometer'),
+              ('plays.html',   'plays',     'Plays',     'fa fa-trophy'),
+              ('players.html', 'players',   'Players',   'fa fa-users'),
+              ('games.html',   'games',     'Games',     'fa fa-star'),
             ]
         -%}
         <section class="sidebar">
@@ -57,9 +57,12 @@
           <ul class="sidebar-menu">
             <li class="header">NAVIGATION</li>
             <!-- Optionally, you can add icons to the links -->
-            {% for (href, id, caption) in sidebar_menu %}
+            {% for (href, id, caption, icon) in sidebar_menu %}
               <li {% if (id == active_page) %} class="active" {% endif %}>
-                <a href="{{ href|e }}"><span>{{ caption|e }}</span></a>
+                <a href="{{ href|e }}">
+                  <i class="{{ icon|e }}"></i>
+                  <span>{{ caption|e }}</span>
+                </a>
               </li>
             {% endfor %}
           </ul><!-- /.sidebar-menu -->
