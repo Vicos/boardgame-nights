@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 import logging
@@ -88,6 +89,9 @@ if __name__ == "__main__":
   
   import argparse
   parser = argparse.ArgumentParser(description='Build static Web pages of the Boardgame Nights project.')
+  parser.add_argument('-s', '--serve',
+                      action='store_true',
+                      help="start a Web server for a live preview")
   parser.add_argument('-f', '--fetch',
                       dest='username',
                       help="fetch USERNAME's plays from boardgamegeek.com")
@@ -109,3 +113,9 @@ if __name__ == "__main__":
       'PlayerPlay': PlayerPlay,
     }
   b.render()
+  
+  if args.serve:
+    from livereload import Server
+    server = Server()
+    server.watch(b.templatedir, func=b.render, delay=1.0)
+    server.serve(root=b.builddir)
