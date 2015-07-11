@@ -9,6 +9,7 @@
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
     <link href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css" />
     <link href="js/vendor/datatables/dataTables.bootstrap.css" rel="stylesheet" type="text/css" />
+    <link href="js/vendor/morris/morris.css" rel="stylesheet" type="text/css" />
     <link href="css/admin-lte.min.css" rel="stylesheet" type="text/css" />
     <link href="css/admin-lte-blue.min.css" rel="stylesheet" type="text/css" />
 
@@ -50,15 +51,31 @@
             <!-- Optionally, you can add icons to the links -->
             
               <li >
-                <a href="index.html"><span>Plays</span></a>
+                <a href="index.html">
+                  <i class="fa fa-tachometer"></i>
+                  <span>Dashboard</span>
+                </a>
               </li>
             
               <li >
-                <a href="games.html"><span>Games</span></a>
+                <a href="plays.html">
+                  <i class="fa fa-trophy"></i>
+                  <span>Plays</span>
+                </a>
               </li>
             
               <li  class="active" >
-                <a href="players.html"><span>Players</span></a>
+                <a href="players.html">
+                  <i class="fa fa-users"></i>
+                  <span>Players</span>
+                </a>
+              </li>
+            
+              <li >
+                <a href="games.html">
+                  <i class="fa fa-star"></i>
+                  <span>Games</span>
+                </a>
               </li>
             
           </ul><!-- /.sidebar-menu -->
@@ -863,16 +880,6 @@
 </section>
 
       </div><!-- /.content-wrapper -->
-
-      <!-- Main Footer -->
-      <footer class="main-footer">
-        <!-- To the right -->
-        <div class="pull-right hidden-xs">
-          Anything you want
-        </div>
-        <!-- Default to the left -->
-        <strong>Copyright &copy; 2015 <a href="#">Company</a>.</strong> All rights reserved.
-      </footer>
       
     </div><!-- ./wrapper -->
 
@@ -881,6 +888,8 @@
     <script src="js/vendor/bootstrap.min.js" type="text/javascript"></script>
     <script src="js/vendor/datatables/jquery.dataTables.min.js" type="text/javascript"></script>
     <script src="js/vendor/datatables/dataTables.bootstrap.min.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+    <script src="js/vendor/morris/morris.min.js" type="text/javascript"></script>
     <script src="js/vendor/admin-lte.min.js" type="text/javascript"></script>
     
 <script type="text/javascript" charset="utf-8">
