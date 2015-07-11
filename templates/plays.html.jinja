@@ -13,8 +13,9 @@
           <tr>
             <th>Game</th>
             <th>Date</th>
-            <th>Location</th>
+            <th>Quantity</th>
             <th>Length (min)</th>
+            <th>Location</th>
           </tr>
         </thead>
         <tbody>
@@ -22,8 +23,9 @@
             <tr>
               <td>{{ play.game.name }}</td>
               <td>{{ play.date }}</td>
-              <td>{{ play.location }}</td>
+              <td>{{ play.quantity }}</td>
               <td>{{ play.length }}</td>
+              <td>{{ play.location }}</td>
             </tr>
           {% endfor %}
         </tbody>
