@@ -9,7 +9,7 @@
     <div class="col-lg-4 col-xs-6">
       <div class="small-box bg-aqua">
         <div class="inner">
-          <h3>{{ Play.select().count() }}</h3>
+          <h3>{{ Play.select()|sum(attribute='quantity') }}</h3>
           <p>Plays</p>
         </div>
         <div class="icon">
