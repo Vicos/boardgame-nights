@@ -10,17 +10,17 @@ BGG_MAX_PLAY_PER_REQUEST = 100
 ANONYMOUS_PLAYER_NAME = 'John Doe'
 
 class Fetcher:
-  def fetch(self):
+  def fetch(self, username):
     """
       Fetch BGG to get all plays of a specific account
     """
     isEndOfList = False
     page = 1
     while not isEndOfList:
-      logging.info("Fetching BGG plays (page %d)" % ( page ))
+      logging.info("Fetching BGG plays (user: %s, page: %d)" % ( username, page ))
       r = requests.get(url=BGG_PLAYS_URL,
         params={
-          'username': 'leochab',
+          'username': username,
           'page': page,
           'type': 'thing',
           'subtype': 'boardgame'

@@ -83,9 +83,24 @@ class Builder:
     filename = os.path.basename(filepath)
     return (filename[0] != '_')
 
-def fetch_and_render():
+if __name__ == "__main__":
+  logging.basicConfig(format='%(levelname)7s: %(message)s', level=logging.INFO)
+  
+  import argparse
+  parser = argparse.ArgumentParser(description='Build static Web pages of the Boardgame Nights project.')
+  parser.add_argument('-f', '--fetch',
+                      dest='username',
+                      help="fetch USERNAME's plays from boardgamegeek.com")
+  args = parser.parse_args()
+
+  # fetch data
   f = Fetcher()
-  f.openSample('test-samples.xml')
+  if args.username:
+    f.fetch(username=args.username)
+  else:
+    f.openSample(filename='test-samples.xml')
+
+  # render pages
   b = Builder()
   b.env.globals = {
       'Play': Play,
@@ -94,7 +109,3 @@ def fetch_and_render():
       'PlayerPlay': PlayerPlay,
     }
   b.render()
-
-if __name__ == "__main__":
-  logging.basicConfig(format='%(levelname)7s: %(message)s', level=logging.INFO)
-  fetch_and_render()
