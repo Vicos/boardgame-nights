@@ -31,10 +31,8 @@ class Play(BaseModel):
     endDate = datetime.date.today().replace(day=1)
     for i in xrange(months):
       startDate = (endDate - datetime.timedelta(days=1)).replace(day=1)
-      print "s: %s | e: %s" % (startDate, endDate)
-      yield (
-        startDate,
-        cls.select().where(cls.date.between(startDate, endDate)) )
+      yield (startDate,
+            cls.select().where(cls.date.between(startDate, endDate)))
       endDate = startDate
       
 class Player(BaseModel):
