@@ -1,0 +1,47 @@
+{% extends "_layout.html.jinja" %}
+{% set active_page = "plays" %}
+
+{% block body %}
+<section class="content">
+  <div class="box">
+    <div class="box-header">
+      <h3 class="box-title">Plays</h3>
+    </div>
+    <div class="box-body">
+      <table id="plays-table" class="table table-bordered table-striped">
+        <thead>
+          <tr>
+            <th>Game</th>
+            <th>Date</th>
+            <th>Location</th>
+            <th>Length (min)</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for play in Play.select() %}
+            <tr>
+              <td>{{ play.game.name }}</td>
+              <td>{{ play.date }}</td>
+              <td>{{ play.location }}</td>
+              <td>{{ play.length }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script type="text/javascript" charset="utf-8">
+  $(function () {
+    $("#plays-table").DataTable({
+      "searching": true,
+      "order": [[ 1, 'desc' ]],
+      "lengthChange": false,
+      "pageLength": 15,
+    });
+  });
+</script>
+{% endblock %}

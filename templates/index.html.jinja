@@ -1,47 +1,57 @@
 {% extends "_layout.html.jinja" %}
-{% set active_page = "plays" %}
+{% set active_page = "dashboard" %}
 
 {% block body %}
 <section class="content">
-  <div class="box">
-    <div class="box-header">
-      <h3 class="box-title">Plays</h3>
+  <!-- Stat boxes -->
+  <div class="row">
+    <!-- Plays -->
+    <div class="col-lg-4 col-xs-6">
+      <div class="small-box bg-aqua">
+        <div class="inner">
+          <h3>{{ Play.select().count() }}</h3>
+          <p>Plays</p>
+        </div>
+        <div class="icon">
+          <i class="fa fa-trophy"></i>
+        </div>
+        <a href="plays.html" class="small-box-footer">
+          More info <i class="fa fa-arrow-circle-right"></i>
+        </a>
+      </div>
     </div>
-    <div class="box-body">
-      <table id="plays-table" class="table table-bordered table-striped">
-        <thead>
-          <tr>
-            <th>Game</th>
-            <th>Date</th>
-            <th>Location</th>
-            <th>Length (min)</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for play in Play.select() %}
-            <tr>
-              <td>{{ play.game.name }}</td>
-              <td>{{ play.date }}</td>
-              <td>{{ play.location }}</td>
-              <td>{{ play.length }}</td>
-            </tr>
-          {% endfor %}
-        </tbody>
-      </table>
+    <!-- Players -->
+    <div class="col-lg-4 col-xs-6">
+      <!-- small box -->
+      <div class="small-box bg-green">
+        <div class="inner">
+          <h3>{{ Player.select().count() }}</h3>
+          <p>Players</p>
+        </div>
+        <div class="icon">
+          <i class="fa fa-users"></i>
+        </div>
+        <a href="players.html" class="small-box-footer">
+          More info <i class="fa fa-arrow-circle-right"></i>
+        </a>
+      </div>
+    </div>
+    <!-- Games -->
+    <div class="col-lg-4 col-lg-offset-0 col-xs-6 col-xs-offset-3">
+      <!-- small box -->
+      <div class="small-box bg-yellow">
+        <div class="inner">
+          <h3>{{ Game.select().count() }}</h3>
+          <p>Boardgames</p>
+        </div>
+        <div class="icon">
+          <i class="fa fa-star"></i>
+        </div>
+        <a href="games.html" class="small-box-footer">
+          More info <i class="fa fa-arrow-circle-right"></i>
+        </a>
+      </div>
     </div>
   </div>
 </section>
-{% endblock %}
-
-{% block scripts %}
-<script type="text/javascript" charset="utf-8">
-  $(function () {
-    $("#plays-table").DataTable({
-      "searching": true,
-      "order": [[ 1, 'desc' ]],
-      "lengthChange": false,
-      "pageLength": 15,
-    });
-  });
-</script>
 {% endblock %}
