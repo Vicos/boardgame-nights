@@ -1,4 +1,5 @@
 from peewee import *
+import datetime
 
 database = SqliteDatabase(':memory:')
 
@@ -25,6 +26,17 @@ class Play(BaseModel):
   length = IntegerField(null=True)
   game = ForeignKeyField(Game, related_name='Play', null=True)
 
+  @classmethod
+  def lastPlaysByMonths(cls, months=12):
+    endDate = datetime.date.today().replace(day=1)
+    for i in xrange(months):
+      startDate = (endDate - datetime.timedelta(days=1)).replace(day=1)
+      print "s: %s | e: %s" % (startDate, endDate)
+      yield (
+        startDate,
+        cls.select().where(cls.date.between(startDate, endDate)) )
+      endDate = startDate
+      
 class Player(BaseModel):
   name = CharField(primary_key=True)
 
